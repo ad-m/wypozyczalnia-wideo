@@ -29,7 +29,7 @@ public class SaveAction implements ActionListener {
 				set.toFile(fs);
 				fs.close();
 			} catch (IOException e1) {
-				ExceptionDialog.showExceptionDialog(e1);
+				ExceptionDialog.showExceptionDialog(frame, e1);
 			}
 		} else {
 			JOptionPane.showMessageDialog(frame, "No file selected.");

@@ -36,9 +36,8 @@ public class LoadAction implements ActionListener {
 						.getSelectedFile());
 				set.fromFile(fs);
 			} catch (EOFException e2) {
-				// pass silient
 			} catch (IOException | ClassNotFoundException e1) {
-				ExceptionDialog.showExceptionDialog(e1);
+				ExceptionDialog.showExceptionDialog(frame, e1);
 			}
 		} else {
 			JOptionPane.showMessageDialog(frame, "No file selected.");

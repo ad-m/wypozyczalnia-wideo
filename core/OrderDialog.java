@@ -1,4 +1,5 @@
 package core;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -27,12 +28,11 @@ import actions.CloseAction;
 import actions.RemoveAction;
 import model.Client;
 import model.ClientSet;
-import model.ListModel;
 import model.Order;
 import model.OrderEntry;
 import model.VideoSet;
 
-public class OrderWindow extends JDialog implements WindowObject<Order> {
+public class OrderDialog extends JDialog implements WindowObject<Order> {
 	/**
 	 * 
 	 */
@@ -52,7 +52,7 @@ public class OrderWindow extends JDialog implements WindowObject<Order> {
 
 	public static void main(String[] args) {
 		try {
-			OrderWindow dialog = new OrderWindow(new JFrame(), "Title");
+			OrderDialog dialog = new OrderDialog(new JFrame(), "Title");
 			System.out.print(dialog.getObject());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,7 +62,7 @@ public class OrderWindow extends JDialog implements WindowObject<Order> {
 	/**
 	 * Create the dialog.
 	 */
-	public OrderWindow(JFrame frame, String title) {
+	public OrderDialog(JFrame frame, String title) {
 		super(frame, title, true);
 		this.frame = frame;
 		this.object = new Order();
@@ -73,7 +73,7 @@ public class OrderWindow extends JDialog implements WindowObject<Order> {
 		initialize();
 	}
 
-	public OrderWindow(JFrame frame, String title, Order object,
+	public OrderDialog(JFrame frame, String title, Order object,
 			ClientSet clientset, VideoSet videoset) {
 		super(frame, title, true);
 		this.frame = frame;
@@ -146,7 +146,7 @@ public class OrderWindow extends JDialog implements WindowObject<Order> {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						System.out.print("Add action fired!");
-						OrderEntryWindow vw = new OrderEntryWindow(frame,
+						OrderEntryDialog vw = new OrderEntryDialog(frame,
 								"Smiths", videoset, new OrderEntry());
 						if (vw.getStatus()) {
 							model.addElement(vw.getObject());
@@ -155,7 +155,7 @@ public class OrderWindow extends JDialog implements WindowObject<Order> {
 					}
 				});
 				JButton btnRemove = new JButton("Remove selected");
-				btnRemove.addActionListener(new RemoveAction(entryList, model));
+				btnRemove.addActionListener(new RemoveAction(frame, entryList, model));
 				buttonPanel.add(btnRemove);
 
 				buttonPanel.add(addButton);
@@ -224,9 +224,8 @@ public class OrderWindow extends JDialog implements WindowObject<Order> {
 				object.setReturndate(df.parse(returnedOnText.getText()));
 			}
 		} catch (ParseException e) {
-			ExceptionDialog.showExceptionDialog(e);
+			ExceptionDialog.showExceptionDialog(frame, e);
 		}
-		;
 		object.setClient(this.clientList.getSelectedValue());
 	}
 }

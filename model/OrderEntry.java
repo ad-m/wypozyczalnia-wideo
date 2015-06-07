@@ -25,10 +25,9 @@ public class OrderEntry implements Serializable {
 	public OrderEntry() {
 	}
 
-	
 	@Override
 	public String toString() {
 		return "Entry [video=" + video + "]";
 	}
-	
+
 }

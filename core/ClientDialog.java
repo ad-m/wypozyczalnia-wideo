@@ -1,4 +1,5 @@
 package core;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -24,12 +25,7 @@ import javax.swing.JFormattedTextField;
 import actions.CloseAction;
 import model.Client;
 
-public class ClientWindow extends JDialog {
-
-	/**
-	 * 
-	 */
-	private JDialog dialog;
+public class ClientDialog extends JDialog implements WindowObject<Client> {
 	private static final long serialVersionUID = -199117375756393413L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField firstNameText = new JTextField("John");
@@ -37,20 +33,16 @@ public class ClientWindow extends JDialog {
 	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 	private JFormattedTextField createdOnText = new JFormattedTextField(df);
 	private Client object;
-	private JFrame parent;
+	private JFrame frame;
 	private boolean status = false;
-
-	{
-		dialog = this;
-	}
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			ClientWindow dialog = new ClientWindow(null, "B");
-			System.out.println(dialog.getClient());
+			ClientDialog dialog = new ClientDialog(null, "B");
+			System.out.println(dialog.getObject());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,26 +51,26 @@ public class ClientWindow extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ClientWindow(JFrame parent, String title, Client client) {
+	public ClientDialog(JFrame parent, String title, Client client) {
 		super(parent, title, true);
-		this.parent = parent;
+		this.frame = parent;
 		this.object = client;
 		copyData();
 		initialize();
 	}
 
-	public ClientWindow(JFrame parent, String title) {
-		super(parent, title, true);
-		this.parent = parent;
+	public ClientDialog(JFrame frame, String title) {
+		super(frame, title, true);
+		this.frame = frame;
 		this.object = new Client();
 		copyData();
 		initialize();
 	}
 
 	private void initialize() {
-		if (parent != null) {
-			Dimension parentSize = parent.getSize();
-			Point p = parent.getLocation();
+		if (frame != null) {
+			Dimension parentSize = frame.getSize();
+			Point p = frame.getLocation();
 			setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		}
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -131,7 +123,7 @@ public class ClientWindow extends JDialog {
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
-				cancelButton.addActionListener(new CloseAction(dialog));
+				cancelButton.addActionListener(new CloseAction(this));
 				buttonPane.add(cancelButton);
 			}
 		}
@@ -152,18 +144,14 @@ public class ClientWindow extends JDialog {
 		try {
 			object.setCreatedOn(df.parse(createdOnText.getText()));
 		} catch (ParseException e) {
-			ExceptionDialog.showExceptionDialog(e);
+			ExceptionDialog.showExceptionDialog(frame, e);
 		}
-	}
-
-	public Client getClient() {
-		return object;
 	}
 
 	public Client getObject() {
 		return this.object;
-	};
-
+	}
+	
 	public boolean getStatus() {
 		return this.status;
 	}

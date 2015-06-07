@@ -8,7 +8,6 @@ public class CloseAction implements ActionListener {
 	private Window frame;
 
 	public CloseAction(Window frame) {
-		super();
 		this.frame = frame;
 	}
 

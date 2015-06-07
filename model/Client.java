@@ -1,9 +1,9 @@
 package model;
+
 import java.io.Serializable;
 import java.util.Date;
 
-
-public class Client extends Person implements Serializable{
+public class Client extends Person implements Serializable {
 	/**
 	 * 
 	 */
@@ -27,5 +27,5 @@ public class Client extends Person implements Serializable{
 		super("John", "Smith");
 		this.createdOn = new Date();
 	}
-	
+
 }

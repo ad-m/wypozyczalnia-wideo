@@ -1,4 +1,5 @@
 package core;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,7 @@ import model.OrderEntry;
 import model.Video;
 import model.VideoSet;
 
-public class OrderEntryWindow extends JDialog implements
+public class OrderEntryDialog extends JDialog implements
 		WindowObject<OrderEntry> {
 
 	/**
@@ -34,8 +35,8 @@ public class OrderEntryWindow extends JDialog implements
 	 */
 	public static void main(String[] args) {
 		try {
-			OrderEntryWindow dialog = new OrderEntryWindow(new JFrame(),
-					"Title", new VideoSet(), new OrderEntry());
+			OrderEntryDialog dialog = new OrderEntryDialog(new JFrame(), "Title",
+					new VideoSet(), new OrderEntry());
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -46,7 +47,7 @@ public class OrderEntryWindow extends JDialog implements
 	/**
 	 * Create the dialog.
 	 */
-	public OrderEntryWindow(JFrame frame, String title, VideoSet videoset,
+	public OrderEntryDialog(JFrame frame, String title, VideoSet videoset,
 			OrderEntry object) {
 		super(frame, title, true);
 		this.object = object;

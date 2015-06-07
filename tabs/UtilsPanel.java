@@ -1,4 +1,5 @@
-package core;
+package tabs;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -7,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import actions.SaveAllButton;
+import actions.SaveAllAction;
 import model.ClientSet;
 import model.OrderSet;
 import model.VideoSet;
@@ -20,7 +21,7 @@ public class UtilsPanel extends JPanel {
 	private ClientSet clientset;
 	private VideoSet videoset;
 	private OrderSet orderset;
-
+	private JFrame frame;
 	/**
 	 * Create the panel.
 	 */
@@ -30,13 +31,14 @@ public class UtilsPanel extends JPanel {
 		f.setLayout(new BorderLayout());
 		JPanel p = new JPanel();
 		p.setBorder(new EmptyBorder(0, 5, 0, 5));
-		p.add(new UtilsPanel(new OrderSet(), new VideoSet(), new ClientSet()));
+		p.add(new UtilsPanel(new JFrame(), new OrderSet(), new VideoSet(), new ClientSet()));
 		f.add(p, BorderLayout.CENTER);
 		f.pack();
 		f.setVisible(true);
 	}
 
-	public UtilsPanel(OrderSet orderset, VideoSet videoset, ClientSet clientset) {
+	public UtilsPanel(JFrame frame, OrderSet orderset, VideoSet videoset, ClientSet clientset) {
+		this.frame = frame;
 		this.orderset = orderset;
 		this.clientset = clientset;
 		this.videoset = videoset;
@@ -47,8 +49,8 @@ public class UtilsPanel extends JPanel {
 	private void initialize() {
 
 		this.setLayout(new FlowLayout(FlowLayout.CENTER));
-		JButton btnSaveAll = new SaveAllButton("Save all", orderset, videoset,
-				clientset);
+		JButton btnSaveAll = new JButton("Save all");
+		btnSaveAll.addActionListener(new SaveAllAction(frame, orderset, videoset, clientset));
 		add(btnSaveAll);
 
 	}

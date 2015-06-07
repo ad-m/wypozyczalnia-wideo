@@ -1,9 +1,11 @@
 package core;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,7 +15,6 @@ import javax.swing.border.EmptyBorder;
 import actions.CloseAction;
 import model.Client;
 import model.ClientSet;
-import model.ListModel;
 
 public class ResultsetDialog<T> extends JDialog {
 
@@ -22,6 +23,7 @@ public class ResultsetDialog<T> extends JDialog {
 	 */
 	private static final long serialVersionUID = 6268145830414515607L;
 	private final JPanel contentPanel = new JPanel();
+	// private JFrame frame;
 	private ListModel<T> resultset;
 
 	/**
@@ -29,7 +31,7 @@ public class ResultsetDialog<T> extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			new ResultsetDialog<Client>(new ClientSet());
+			new ResultsetDialog<Client>(new JFrame(), new ClientSet());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,7 +40,9 @@ public class ResultsetDialog<T> extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ResultsetDialog(ListModel<T> resultset) {
+	public ResultsetDialog(JFrame frame, ListModel<T> resultset) {
+		super(frame, false);
+		// this.frame = frame;
 		this.resultset = resultset;
 		initialize();
 	}

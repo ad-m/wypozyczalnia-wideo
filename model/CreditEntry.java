@@ -2,13 +2,14 @@ package model;
 
 import java.io.Serializable;
 
-public class CreditEntry implements Serializable{
+public class CreditEntry implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5631926912184156113L;
 	private Person person;
 	private String role;
+
 	public CreditEntry(String firstName, String secondName, String role) {
 		this.person = new Person(firstName, secondName);
 		this.role = role;
@@ -24,5 +25,4 @@ public class CreditEntry implements Serializable{
 		return "CreditEntry [person=" + person + ", role=" + role + "]";
 	}
 
-		
 }

@@ -1,25 +1,36 @@
 package core;
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
-import actions.CloseAction;
-import actions.RemoveAction;
 import model.CreditEntry;
-import model.ListModel;
 import model.Video;
+import actions.CloseAction;
 
-public class VideoWindow extends JDialog implements WindowObject<Video> {
+public class VideoDialog extends JDialog implements WindowObject<Video> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2518133095245391812L;
 	private Video video;
-	private JFrame parent;
+	private JFrame frame;
 	private JTextPane titleText = new JTextPane();
 	private JTextField diskFreeText = new JTextField();
 	private JTextField diskTotalText = new JTextField();
@@ -35,7 +46,7 @@ public class VideoWindow extends JDialog implements WindowObject<Video> {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VideoWindow window = new VideoWindow(new JFrame(), "A");
+					VideoDialog window = new VideoDialog(new JFrame(), "A");
 					System.out.print(window.getObject());
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,17 +55,17 @@ public class VideoWindow extends JDialog implements WindowObject<Video> {
 		});
 	}
 
-	public VideoWindow(JFrame parent, String title, Video video) {
+	public VideoDialog(JFrame parent, String title, Video video) {
 		super(parent, title, true);
-		this.parent = parent;
+		this.frame = parent;
 		this.video = video;
 		copyData();
 		initialize();
 	}
 
-	public VideoWindow(JFrame parent, String title) {
+	public VideoDialog(JFrame parent, String title) {
 		super(parent, title, true);
-		this.parent = parent;
+		this.frame = parent;
 		model = new ListModel<CreditEntry>();
 		this.video = new Video();
 		copyData();
@@ -62,9 +73,9 @@ public class VideoWindow extends JDialog implements WindowObject<Video> {
 	}
 
 	private void initialize() {
-		if (parent != null) {
-			Dimension parentSize = parent.getSize();
-			Point p = parent.getLocation();
+		if (frame != null) {
+			Dimension parentSize = frame.getSize();
+			Point p = frame.getLocation();
 			setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		}
 		setBounds(100, 100, 450, 300);
@@ -100,37 +111,7 @@ public class VideoWindow extends JDialog implements WindowObject<Video> {
 		diskStatus.add(diskTotalText);
 		diskTotalText.setColumns(10);
 
-		JPanel entriesPanel = new JPanel();
-		tabbedPane.addTab("Entries", null, entriesPanel, null);
-		entriesPanel.setLayout(new BorderLayout(0, 0));
-
-		JScrollPane scrollPane = new JScrollPane();
-		entriesPanel.add(scrollPane, BorderLayout.NORTH);
-
-		JList<CreditEntry> list = new JList<CreditEntry>();
-		list.setModel(model);
-		scrollPane.setViewportView(list);
-
-		JPanel panel_3 = new JPanel();
-		entriesPanel.add(panel_3, BorderLayout.CENTER);
-
-		JButton btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				CreditEntryPicker picker = new CreditEntryPicker();
-				int result = JOptionPane.showConfirmDialog(null, picker,
-						"CreditEntry prompt", JOptionPane.OK_CANCEL_OPTION);
-				if (result == JOptionPane.OK_OPTION) {
-					model.addElement(picker.getCreditEntry());
-				}
-			}
-		});
-		panel_3.add(btnAdd);
-		JButton btnRemove = new JButton("Remove selected");
-		btnRemove.addActionListener(new RemoveAction(list, model));
-		panel_3.add(btnRemove);
+		tabbedPane.addTab("Entries", null, new VideoEntryPanel(frame, model), null);
 
 		JPanel mainBtn = new JPanel();
 		getContentPane().add(mainBtn, BorderLayout.SOUTH);
@@ -144,7 +125,7 @@ public class VideoWindow extends JDialog implements WindowObject<Video> {
 				try {
 					updateVideo();
 				} catch (NumberFormatException ex) {
-					ExceptionDialog.showExceptionDialog(ex);
+					ExceptionDialog.showExceptionDialog(frame, ex);
 				}
 				;
 				status = true;
@@ -159,6 +140,7 @@ public class VideoWindow extends JDialog implements WindowObject<Video> {
 		pack();
 		setVisible(true);
 	}
+
 
 	private void copyData() {
 		this.titleText.setText(video.getTitle());

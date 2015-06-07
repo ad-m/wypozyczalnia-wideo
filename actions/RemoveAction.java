@@ -3,17 +3,19 @@ package actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-import model.ListModel;
+import core.ListModel;
 
 public final class RemoveAction implements ActionListener {
 	private JList<?> list;
 	private ListModel<?> model;
-
-	public RemoveAction(JList<?> list, ListModel<?> model) {
+	private JFrame frame;
+	public RemoveAction(JFrame frame, JList<?> list, ListModel<?> model) {
 		super();
+		this.frame = frame;
 		this.list = list;
 		this.model = model;
 	}
@@ -25,6 +27,6 @@ public final class RemoveAction implements ActionListener {
 		if (index != -1) {
 			model.remove(index);
 		}
-		JOptionPane.showMessageDialog(null, text + " removed!");
+		JOptionPane.showMessageDialog(frame, text + " removed!");
 	}
 }
