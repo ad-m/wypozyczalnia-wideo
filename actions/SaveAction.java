@@ -1,31 +1,31 @@
+package actions;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
 import javax.swing.*;
 
+import core.ExceptionDialog;
 import model.Set;
-
 
 public class SaveAction implements ActionListener {
 	JFrame frame;
 	Set<?> set;
-	final JFileChooser fc = new JFileChooser();
 
-	
 	public SaveAction(JFrame frame, Set<?> set) {
 		this.frame = frame;
 		this.set = set;
 	}
 
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		JFileChooser fc = new JFileChooser();
 		System.out.println("Save action fired");
-		int returnVal = fc.showSaveDialog(frame);
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
+		if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
 			try {
-				ObjectOutputStream fs = FileToObjectOutputStream(fc.getSelectedFile());
+				ObjectOutputStream fs = FileToObjectOutputStream(fc
+						.getSelectedFile());
 				set.toFile(fs);
 				fs.close();
 			} catch (IOException e1) {
@@ -36,8 +36,9 @@ public class SaveAction implements ActionListener {
 		}
 	}
 
-
-	private ObjectOutputStream FileToObjectOutputStream(File file) throws FileNotFoundException, IOException{
-		return new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+	private ObjectOutputStream FileToObjectOutputStream(File file)
+			throws FileNotFoundException, IOException {
+		return new ObjectOutputStream(new BufferedOutputStream(
+				new FileOutputStream(file)));
 	}
 }

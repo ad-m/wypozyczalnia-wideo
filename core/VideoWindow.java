@@ -1,15 +1,19 @@
+package core;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import actions.CloseAction;
+import actions.RemoveAction;
 import model.CreditEntry;
 import model.ListModel;
 import model.Video;
 
-public class VideoWindow extends JDialog {
+public class VideoWindow extends JDialog implements WindowObject<Video> {
 	/**
 	 * 
 	 */
@@ -17,10 +21,13 @@ public class VideoWindow extends JDialog {
 	private Video video;
 	private JFrame parent;
 	private JTextPane titleText = new JTextPane();
-	private JTextField diskFree = new JTextField();
-	private JTextField diskTotal = new JTextField();
+	private JTextField diskFreeText = new JTextField();
+	private JTextField diskTotalText = new JTextField();
+	private JTextField perDayText = new JTextField();
+
 	private ListModel<CreditEntry> model;
-	
+	private boolean status = false;
+
 	/**
 	 * Launch the application.
 	 */
@@ -29,7 +36,7 @@ public class VideoWindow extends JDialog {
 			public void run() {
 				try {
 					VideoWindow window = new VideoWindow(new JFrame(), "A");
-					System.out.print(window.getVideo());
+					System.out.print(window.getObject());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -45,13 +52,6 @@ public class VideoWindow extends JDialog {
 		initialize();
 	}
 
-	private void copyData() {
-		video.getTitle();
-		this.titleText.setText("A");
-		this.model = video.getCredits();
-		this.diskFree.setText(video.getDiskFree()+"");
-		this.diskTotal.setText(video.getDiskTotal()+"");
-	}
 	public VideoWindow(JFrame parent, String title) {
 		super(parent, title, true);
 		this.parent = parent;
@@ -60,13 +60,12 @@ public class VideoWindow extends JDialog {
 		copyData();
 		initialize();
 	}
-	
 
 	private void initialize() {
 		if (parent != null) {
-			Dimension parentSize = parent.getSize(); 
-		    Point p = parent.getLocation(); 
-		    setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
+			Dimension parentSize = parent.getSize();
+			Point p = parent.getLocation();
+			setLocation(p.x + parentSize.width / 4, p.y + parentSize.height / 4);
 		}
 		setBounds(100, 100, 450, 300);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -79,24 +78,27 @@ public class VideoWindow extends JDialog {
 		tabbedPane.addTab("General", null, generalPanel, null);
 		generalPanel.setLayout(new GridLayout(0, 2, 0, 0));
 
-		
 		JLabel label = new JLabel("Title");
 		generalPanel.add(label);
 
-		titleText.setText("Shrek");
 		generalPanel.add(titleText);
+
+		JLabel label2 = new JLabel("Price per day");
+		generalPanel.add(label2);
+
+		generalPanel.add(perDayText);
 
 		JLabel label_1 = new JLabel("Disks");
 		generalPanel.add(label_1);
-		
+
 		JPanel diskStatus = new JPanel();
 		generalPanel.add(diskStatus);
-		
-		diskStatus.add(diskFree);
-		diskFree.setColumns(10);
-		
-		diskStatus.add(diskTotal);
-		diskTotal.setColumns(10);
+
+		diskStatus.add(diskFreeText);
+		diskFreeText.setColumns(10);
+
+		diskStatus.add(diskTotalText);
+		diskTotalText.setColumns(10);
 
 		JPanel entriesPanel = new JPanel();
 		tabbedPane.addTab("Entries", null, entriesPanel, null);
@@ -136,20 +138,21 @@ public class VideoWindow extends JDialog {
 
 		JButton btnOK = new JButton("OK");
 		btnOK.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try{
-				updateVideo();
-				}catch(NumberFormatException ex){
+				try {
+					updateVideo();
+				} catch (NumberFormatException ex) {
 					ExceptionDialog.showExceptionDialog(ex);
-				};
+				}
+				;
+				status = true;
 				dispose();
 			}
 		});
 		mainBtn.add(btnOK);
-		
-		
+
 		JButton btnClose = new JButton("Close");
 		btnClose.addActionListener(new CloseAction(this));
 		mainBtn.add(btnClose);
@@ -157,13 +160,27 @@ public class VideoWindow extends JDialog {
 		setVisible(true);
 	}
 
-	protected void updateVideo() {
-		video.setTitle(titleText.getText());
-		video.setDiskFree(Integer.parseInt(diskFree.getText()));
-		video.setDiskTotal(Integer.parseInt(diskTotal.getText()));
-		
+	private void copyData() {
+		this.titleText.setText(video.getTitle());
+		this.model = video.getCredits();
+		this.diskFreeText.setText(video.getDiskFree() + "");
+		this.diskTotalText.setText(video.getDiskTotal() + "");
+		this.perDayText.setText(video.getPerDay().toString());
 	}
-	public Video getVideo(){
+
+	private void updateVideo() {
+		video.setTitle(titleText.getText());
+		video.setDiskFree(Integer.parseInt(diskFreeText.getText()));
+		video.setDiskTotal(Integer.parseInt(diskTotalText.getText()));
+		video.setPerDay(new BigDecimal(perDayText.getText()));
+
+	}
+
+	public Video getObject() {
 		return this.video;
 	};
+
+	public boolean getStatus() {
+		return this.status;
+	}
 }

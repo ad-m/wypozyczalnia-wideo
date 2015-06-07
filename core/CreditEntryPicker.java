@@ -1,3 +1,4 @@
+package core;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -9,7 +10,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import model.CreditEntry;
-
 
 public class CreditEntryPicker extends JPanel {
 
@@ -24,15 +24,14 @@ public class CreditEntryPicker extends JPanel {
 	private JLabel secondNameLabel;
 	private JLabel roleLabel;
 
-
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
 			CreditEntryPicker b = new CreditEntryPicker();
-			JOptionPane.showConfirmDialog(null, b ,
-		            "Select Something", JOptionPane.OK_CANCEL_OPTION) ;
+			JOptionPane.showConfirmDialog(null, b, "Select Something",
+					JOptionPane.OK_CANCEL_OPTION);
 			System.out.print("Done!");
 			System.out.print(b.getCreditEntry());
 		} catch (Exception e) {
@@ -40,8 +39,9 @@ public class CreditEntryPicker extends JPanel {
 		}
 	}
 
-	public CreditEntry getCreditEntry(){
-		return new CreditEntry(firstNameText.getText(), secondNameText.getText(), roleText.getText());
+	public CreditEntry getCreditEntry() {
+		return new CreditEntry(firstNameText.getText(),
+				secondNameText.getText(), roleText.getText());
 	}
 
 	/**

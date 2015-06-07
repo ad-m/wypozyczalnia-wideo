@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 
 public class Video implements Serializable{
@@ -8,26 +9,28 @@ public class Video implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -6327190683242673134L;
-	private String title = "";
+	private String title = "Alojz";
 	private ListModel<CreditEntry> credits = new ListModel<CreditEntry>();
 	private int diskTotal = 10;
 	private int diskFree = 5;
+	private BigDecimal perDay = new BigDecimal("5");
 	public Video(String title, int diskTotal,
-			int diskFree) {
+			int diskFree, BigDecimal perDay) {
 		this.title = title;
 		this.diskTotal = diskTotal;
 		this.diskFree = diskFree;
+		this.perDay = perDay;
 	}
 	public Video(String title, ListModel<CreditEntry> credits, int diskTotal,
-			int diskFree) {
+			int diskFree, BigDecimal perDay) {
 		super();
 		this.title = title;
 		this.credits = credits;
 		this.diskTotal = diskTotal;
 		this.diskFree = diskFree;
+		this.perDay = perDay;
 	}
 	public Video() {
-		// TODO Auto-generated constructor stub
 	}
 	public void setTitle(String title) {
 		this.title = title;
@@ -51,12 +54,22 @@ public class Video implements Serializable{
 		return title;
 	}
 	public static Video factory(){
-		return new Video("John", 10, 5);
+		return new Video("John", 10, 5, new BigDecimal("5"));
+	}
+
+	public BigDecimal getPerDay() {
+		return perDay;
+	}
+	public BigDecimal getPrice(int day) {
+		return this.perDay.multiply(new BigDecimal(day));
+	}
+	public void setPerDay(BigDecimal perDay) {
+		this.perDay = perDay;
 	}
 	@Override
 	public String toString() {
-		return "Video [title=" + title + ", disk=" + diskTotal
-				+ " / " + diskFree + "]";
+		return "Video [title=" + title + ", diskTotal=" + diskTotal + ", diskFree=" + diskFree
+				+ ", perDay=" + perDay + "]";
 	}
 	
 }

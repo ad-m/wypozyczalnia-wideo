@@ -1,7 +1,8 @@
+package actions;
+
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 
 public class CloseAction implements ActionListener {
 	private Window frame;

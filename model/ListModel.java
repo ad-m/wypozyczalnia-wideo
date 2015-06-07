@@ -1,16 +1,14 @@
 package model;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-public class ListModel<T> extends AbstractListModel<T> {
-
-	/**
-	 * 
-	 */
+public class ListModel<T> extends AbstractListModel<T> implements Iterable<T> {
 	private static final long serialVersionUID = 7094310649646444688L;
 	protected List<T> data = new ArrayList<T>();
+
 
 	public ListModel() {
 		super();
@@ -34,6 +32,10 @@ public class ListModel<T> extends AbstractListModel<T> {
 	public void remove(int index) {
 		data.remove(index);
 	    fireIntervalRemoved(this, index, index);
+	}
+
+	public Iterator<T> iterator() {
+		return data.iterator();
 	}
 
 }

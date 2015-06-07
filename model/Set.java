@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.Iterator;
 
 
-public class Set<T> extends ListModel<T> {
+public class Set<T> extends ListModel<T> implements Iterable<T> {
 	private static final long serialVersionUID = -7097934167103878681L;
 	public int size() {
 		return data.size();

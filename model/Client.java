@@ -18,5 +18,14 @@ public class Client extends Person implements Serializable{
 	public Date getCreatedOn() {
 		return (Date) createdOn.clone();
 	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Client() {
+		super("John", "Smith");
+		this.createdOn = new Date();
+	}
 	
 }
