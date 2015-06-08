@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import tabs.ClientPanel;
 import tabs.OrderPanel;
-import tabs.SearchPanel;
+import tabs.SearchOrderPanel;
 import tabs.UtilsPanel;
 import tabs.VideoPanel;
 import model.ClientSet;
@@ -70,8 +70,8 @@ public class Application {
 		tabbedPane.addTab("Video", new VideoPanel(frame, videoset));
 		tabbedPane.addTab("Orders", new OrderPanel(frame, orderset, clientset,
 				videoset));
-		tabbedPane.addTab("Search", new SearchPanel(frame, orderset, videoset,
-				clientset));
+		tabbedPane.addTab("Search", new SearchOrderPanel(frame, orderset,
+				videoset, clientset));
 		tabbedPane.addTab("Utils", new UtilsPanel(frame, orderset, videoset,
 				clientset));
 		frame.pack();

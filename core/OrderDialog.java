@@ -178,7 +178,7 @@ public class OrderDialog extends JDialog implements WindowObject<Order> {
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
-				cancelButton.addActionListener(new CloseAction(frame));
+				cancelButton.addActionListener(new CloseAction(this));
 				buttonPane.add(cancelButton);
 			}
 		}

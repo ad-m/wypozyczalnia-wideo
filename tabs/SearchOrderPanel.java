@@ -2,9 +2,6 @@ package tabs;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,15 +11,16 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
-import core.ResultsetDialog;
 import model.Client;
 import model.ClientSet;
 import model.Order;
 import model.OrderSet;
 import model.Video;
 import model.VideoSet;
+import tester.OrderTester;
+import actions.SearchAction;
 
-public class SearchPanel extends JPanel {
+public class SearchOrderPanel extends JPanel {
 	/**
 	 * 
 	 */
@@ -37,8 +35,8 @@ public class SearchPanel extends JPanel {
 		f.setLayout(new BorderLayout());
 		JPanel p = new JPanel();
 		p.setBorder(new EmptyBorder(0, 5, 0, 5));
-		p.add(new SearchPanel(new JFrame(), new OrderSet(), new VideoSet(),
-				new ClientSet()));
+		p.add(new SearchOrderPanel(new JFrame(), new OrderSet(),
+				new VideoSet(), new ClientSet()));
 		f.add(p, BorderLayout.CENTER);
 		f.pack();
 		f.setVisible(true);
@@ -47,7 +45,7 @@ public class SearchPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public SearchPanel(JFrame frame, OrderSet orderset, VideoSet videoset,
+	public SearchOrderPanel(JFrame frame, OrderSet orderset, VideoSet videoset,
 			ClientSet clientset) {
 		this.frame = frame;
 		this.orderset = orderset;
@@ -84,37 +82,8 @@ public class SearchPanel extends JPanel {
 		add(button_panel);
 		JButton btnSearch = new JButton("Search");
 
-		btnSearch.addActionListener(new ActionListener() {
-
-			private boolean check(Order el) {
-				if (clientList.getSelectedValue() != null
-						&& !clientList.getSelectedValue()
-								.equals(el.getClient())) {
-					return false;
-				}
-				if (videoList.getSelectedValue() != null
-						&& !el.hasVideo(videoList.getSelectedValue())) {
-					return false;
-				}
-				return true;
-			}
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				System.out.print("Print orderset");
-				OrderSet resultset = new OrderSet();
-
-				for (Iterator<Order> iterator = orderset.iterator(); iterator
-						.hasNext();) {
-					Order el = iterator.next();
-					if (check(el)) {
-						resultset.addElement(el);
-					}
-				}
-				new ResultsetDialog<Order>(frame, resultset);
-
-			}
-		});
+		btnSearch.addActionListener(new SearchAction<Order>(frame,
+				new OrderTester(clientList, videoList), orderset));
 		button_panel.add(btnSearch);
 	}
 

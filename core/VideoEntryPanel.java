@@ -1,13 +1,10 @@
 package core;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -42,18 +39,7 @@ public class VideoEntryPanel extends JPanel {
 		this.add(panel_3, BorderLayout.CENTER);
 
 		JButton btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				CreditEntryPicker picker = new CreditEntryPicker();
-				int result = JOptionPane.showConfirmDialog(frame, picker,
-						"CreditEntry prompt", JOptionPane.OK_CANCEL_OPTION);
-				if (result == JOptionPane.OK_OPTION) {
-					model.addElement(picker.getCreditEntry());
-				}
-			}
-		});
+		btnAdd.addActionListener(new CreditEntryAddAction(frame, model));
 		panel_3.add(btnAdd);
 		JButton btnRemove = new JButton("Remove selected");
 		btnRemove.addActionListener(new RemoveAction(frame, list, model));

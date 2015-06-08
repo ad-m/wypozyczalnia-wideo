@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 import core.WindowObject;
 
@@ -25,7 +26,8 @@ public class UpdateObjectListAction<T> implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (list.getSelectedValue() != null) {
 			new UpdateObjectAction(frame, dialog).actionPerformed(e);
+		} else {
+			JOptionPane.showMessageDialog(frame, "No object selected in list.");
 		}
-		;
 	}
 }

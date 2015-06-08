@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
-import core.ListModel;
 import model.Set;
 import actions.LoadAction;
 import actions.RemoveAction;
