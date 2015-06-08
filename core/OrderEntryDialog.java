@@ -2,8 +2,6 @@ package core;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -13,10 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import actions.CloseAction;
 import model.OrderEntry;
 import model.Video;
 import model.VideoSet;
+import actions.CloseAction;
+import actions.UpdateObjectListAction;
 
 public class OrderEntryDialog extends JDialog implements
 		WindowObject<OrderEntry> {
@@ -35,8 +34,8 @@ public class OrderEntryDialog extends JDialog implements
 	 */
 	public static void main(String[] args) {
 		try {
-			OrderEntryDialog dialog = new OrderEntryDialog(new JFrame(), "Title",
-					new VideoSet(), new OrderEntry());
+			OrderEntryDialog dialog = new OrderEntryDialog(new JFrame(),
+					"Title", new VideoSet(), new OrderEntry());
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -77,18 +76,8 @@ public class OrderEntryDialog extends JDialog implements
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
-				okButton.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						if (videoList.getSelectedValue() != null) {
-							updateObject();
-							status = true;
-							dispose();
-						}
-						;
-					}
-				});
+				okButton.addActionListener(new UpdateObjectListAction<OrderEntry>(
+						frame, this, videoList));
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
@@ -112,7 +101,11 @@ public class OrderEntryDialog extends JDialog implements
 		return this.status;
 	}
 
-	protected void updateObject() {
+	public void updateObject() {
 		object.setVideo(this.videoList.getSelectedValue());
+	}
+
+	public void setStatus(boolean s) {
+		this.status = s;
 	}
 }

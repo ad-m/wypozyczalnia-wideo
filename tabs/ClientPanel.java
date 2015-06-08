@@ -1,4 +1,5 @@
 package tabs;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,12 +24,14 @@ public class ClientPanel extends AbstractSetPanel {
 	private JFrame frame;
 	private ClientSet clientset;
 	private JList<Client> list = new JList<>();
+
 	public ClientPanel(JFrame frame, ClientSet clientset) {
 		this.frame = frame;
 		this.clientset = clientset;
 		initialize();
 	}
-	private JScrollPane _makeScrollPane(){
+
+	private JScrollPane _makeScrollPane() {
 		JScrollPane scrollPane = new JScrollPane();
 		list.setModel(clientset);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -36,10 +39,10 @@ public class ClientPanel extends AbstractSetPanel {
 		scrollPane.setViewportView(list);
 		return scrollPane;
 	}
+
 	private void initialize() {
 		this.setLayout(new BorderLayout(0, 0));
 
-		
 		// video_panel.add(list);
 		this.add(_makeScrollPane(), BorderLayout.NORTH);
 
@@ -54,11 +57,12 @@ public class ClientPanel extends AbstractSetPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ClientDialog dialog = new ClientDialog(frame, "New client");
-				if(dialog.getStatus()){
+				if (dialog.getStatus()) {
 					clientset.addElement(dialog.getObject());
-					JOptionPane.showMessageDialog(frame, dialog.getObject() 
+					JOptionPane.showMessageDialog(frame, dialog.getObject()
 							+ " saved!");
-				};
+				}
+				;
 			}
 		});
 		panel.add(btnAdd);

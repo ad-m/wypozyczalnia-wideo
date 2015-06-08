@@ -6,8 +6,6 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 
 import javax.swing.JButton;
@@ -23,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import model.CreditEntry;
 import model.Video;
 import actions.CloseAction;
+import actions.UpdateObjectAction;
 
 public class VideoDialog extends JDialog implements WindowObject<Video> {
 	/**
@@ -111,27 +110,15 @@ public class VideoDialog extends JDialog implements WindowObject<Video> {
 		diskStatus.add(diskTotalText);
 		diskTotalText.setColumns(10);
 
-		tabbedPane.addTab("Entries", null, new VideoEntryPanel(frame, model), null);
+		tabbedPane.addTab("Entries", null, new VideoEntryPanel(frame, model),
+				null);
 
 		JPanel mainBtn = new JPanel();
 		getContentPane().add(mainBtn, BorderLayout.SOUTH);
 		mainBtn.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JButton btnOK = new JButton("OK");
-		btnOK.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					updateVideo();
-				} catch (NumberFormatException ex) {
-					ExceptionDialog.showExceptionDialog(frame, ex);
-				}
-				;
-				status = true;
-				dispose();
-			}
-		});
+		btnOK.addActionListener(new UpdateObjectAction(frame, this));
 		mainBtn.add(btnOK);
 
 		JButton btnClose = new JButton("Close");
@@ -141,7 +128,6 @@ public class VideoDialog extends JDialog implements WindowObject<Video> {
 		setVisible(true);
 	}
 
-
 	private void copyData() {
 		this.titleText.setText(video.getTitle());
 		this.model = video.getCredits();
@@ -150,7 +136,7 @@ public class VideoDialog extends JDialog implements WindowObject<Video> {
 		this.perDayText.setText(video.getPerDay().toString());
 	}
 
-	private void updateVideo() {
+	public void updateObject() {
 		video.setTitle(titleText.getText());
 		video.setDiskFree(Integer.parseInt(diskFreeText.getText()));
 		video.setDiskTotal(Integer.parseInt(diskTotalText.getText()));
@@ -164,5 +150,9 @@ public class VideoDialog extends JDialog implements WindowObject<Video> {
 
 	public boolean getStatus() {
 		return this.status;
+	}
+
+	public void setStatus(boolean s) {
+		this.status = s;
 	}
 }

@@ -22,6 +22,7 @@ public class UtilsPanel extends JPanel {
 	private VideoSet videoset;
 	private OrderSet orderset;
 	private JFrame frame;
+
 	/**
 	 * Create the panel.
 	 */
@@ -31,13 +32,15 @@ public class UtilsPanel extends JPanel {
 		f.setLayout(new BorderLayout());
 		JPanel p = new JPanel();
 		p.setBorder(new EmptyBorder(0, 5, 0, 5));
-		p.add(new UtilsPanel(new JFrame(), new OrderSet(), new VideoSet(), new ClientSet()));
+		p.add(new UtilsPanel(new JFrame(), new OrderSet(), new VideoSet(),
+				new ClientSet()));
 		f.add(p, BorderLayout.CENTER);
 		f.pack();
 		f.setVisible(true);
 	}
 
-	public UtilsPanel(JFrame frame, OrderSet orderset, VideoSet videoset, ClientSet clientset) {
+	public UtilsPanel(JFrame frame, OrderSet orderset, VideoSet videoset,
+			ClientSet clientset) {
 		this.frame = frame;
 		this.orderset = orderset;
 		this.clientset = clientset;
@@ -50,7 +53,8 @@ public class UtilsPanel extends JPanel {
 
 		this.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JButton btnSaveAll = new JButton("Save all");
-		btnSaveAll.addActionListener(new SaveAllAction(frame, orderset, videoset, clientset));
+		btnSaveAll.addActionListener(new SaveAllAction(frame, orderset,
+				videoset, clientset));
 		add(btnSaveAll);
 
 	}

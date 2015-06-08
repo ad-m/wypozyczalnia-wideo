@@ -13,6 +13,7 @@ public final class RemoveAction implements ActionListener {
 	private JList<?> list;
 	private ListModel<?> model;
 	private JFrame frame;
+
 	public RemoveAction(JFrame frame, JList<?> list, ListModel<?> model) {
 		super();
 		this.frame = frame;

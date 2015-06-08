@@ -3,27 +3,24 @@ package core;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Point;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Point;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
-import actions.CloseAction;
 import model.Client;
+import actions.CloseAction;
+import actions.UpdateObjectAction;
 
 public class ClientDialog extends JDialog implements WindowObject<Client> {
 	private static final long serialVersionUID = -199117375756393413L;
@@ -108,15 +105,7 @@ public class ClientDialog extends JDialog implements WindowObject<Client> {
 			{
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
-				okButton.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						updateData();
-						status = true;
-						dispose();
-					}
-				});
+				okButton.addActionListener(new UpdateObjectAction(frame, this));
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
@@ -138,7 +127,7 @@ public class ClientDialog extends JDialog implements WindowObject<Client> {
 		createdOnText.setText(df.format(object.getCreatedOn()));
 	}
 
-	private void updateData() {
+	public void updateObject() {
 		object.setFirstName(firstNameText.getText());
 		object.setSecondName(secondNameText.getText());
 		try {
@@ -151,8 +140,12 @@ public class ClientDialog extends JDialog implements WindowObject<Client> {
 	public Client getObject() {
 		return this.object;
 	}
-	
+
 	public boolean getStatus() {
 		return this.status;
+	}
+
+	public void setStatus(boolean s) {
+		this.status = s;
 	}
 }

@@ -37,7 +37,8 @@ public class SearchPanel extends JPanel {
 		f.setLayout(new BorderLayout());
 		JPanel p = new JPanel();
 		p.setBorder(new EmptyBorder(0, 5, 0, 5));
-		p.add(new SearchPanel(new JFrame(), new OrderSet(), new VideoSet(), new ClientSet()));
+		p.add(new SearchPanel(new JFrame(), new OrderSet(), new VideoSet(),
+				new ClientSet()));
 		f.add(p, BorderLayout.CENTER);
 		f.pack();
 		f.setVisible(true);
@@ -46,7 +47,8 @@ public class SearchPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public SearchPanel(JFrame frame, OrderSet orderset, VideoSet videoset, ClientSet clientset) {
+	public SearchPanel(JFrame frame, OrderSet orderset, VideoSet videoset,
+			ClientSet clientset) {
 		this.frame = frame;
 		this.orderset = orderset;
 		this.clientset = clientset;

@@ -17,7 +17,6 @@ import model.VideoSet;
 
 public class Application {
 
-
 	public OrderSet orderset = new OrderSet();
 	public ClientSet clientset = new ClientSet();
 	public VideoSet videoset = new VideoSet();
@@ -51,7 +50,6 @@ public class Application {
 		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
 		frame.getContentPane()
 				.add(new JLabel(

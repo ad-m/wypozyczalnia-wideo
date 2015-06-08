@@ -2,35 +2,33 @@ package core;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
-
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 
-import actions.CloseAction;
-import actions.RemoveAction;
 import model.Client;
 import model.ClientSet;
 import model.Order;
 import model.OrderEntry;
 import model.VideoSet;
+import actions.AddOrderEntryAction;
+import actions.CloseAction;
+import actions.RemoveAction;
+import actions.UpdateObjectAction;
 
 public class OrderDialog extends JDialog implements WindowObject<Order> {
 	/**
@@ -141,21 +139,13 @@ public class OrderDialog extends JDialog implements WindowObject<Order> {
 				entriesPanel.add(buttonPanel);
 
 				JButton addButton = new JButton("Add");
-				addButton.addActionListener(new ActionListener() {
+				addButton.addActionListener(new AddOrderEntryAction(frame,
+						videoset, model));
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						System.out.print("Add action fired!");
-						OrderEntryDialog vw = new OrderEntryDialog(frame,
-								"Smiths", videoset, new OrderEntry());
-						if (vw.getStatus()) {
-							model.addElement(vw.getObject());
-						}
-
-					}
-				});
 				JButton btnRemove = new JButton("Remove selected");
-				btnRemove.addActionListener(new RemoveAction(frame, entryList, model));
+				btnRemove.addActionListener(new RemoveAction(frame, entryList,
+						model));
+
 				buttonPanel.add(btnRemove);
 
 				buttonPanel.add(addButton);
@@ -182,15 +172,7 @@ public class OrderDialog extends JDialog implements WindowObject<Order> {
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
-				okButton.addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						updateObject();
-						status = true;
-						dispose();
-					}
-				});
+				okButton.addActionListener(new UpdateObjectAction(frame, this));
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
@@ -215,7 +197,7 @@ public class OrderDialog extends JDialog implements WindowObject<Order> {
 		return this.status;
 	}
 
-	private void updateObject() {
+	public void updateObject() {
 		try {
 			if (!createdOnText.getText().equals("")) {
 				object.setCreatedOn(df.parse(createdOnText.getText()));
@@ -228,4 +210,9 @@ public class OrderDialog extends JDialog implements WindowObject<Order> {
 		}
 		object.setClient(this.clientList.getSelectedValue());
 	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
 }

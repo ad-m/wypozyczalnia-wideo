@@ -64,8 +64,6 @@ public class Video implements Serializable {
 		return title;
 	}
 
-
-
 	public BigDecimal getPerDay() {
 		return perDay;
 	}

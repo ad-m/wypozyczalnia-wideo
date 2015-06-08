@@ -23,8 +23,9 @@ public final class SaveAllAction implements ActionListener {
 	private VideoSet videoset;
 	private OrderSet orderset;
 	private JFrame frame;
-	
-	public SaveAllAction(JFrame frame, OrderSet orderset, VideoSet videoset, ClientSet clientset) {
+
+	public SaveAllAction(JFrame frame, OrderSet orderset, VideoSet videoset,
+			ClientSet clientset) {
 		this.frame = frame;
 		this.orderset = orderset;
 		this.clientset = clientset;
