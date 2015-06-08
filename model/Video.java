@@ -64,9 +64,7 @@ public class Video implements Serializable {
 		return title;
 	}
 
-	public static Video factory() {
-		return new Video("John", 10, 5, new BigDecimal("5"));
-	}
+
 
 	public BigDecimal getPerDay() {
 		return perDay;

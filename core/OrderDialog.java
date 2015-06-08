@@ -128,7 +128,7 @@ public class OrderDialog extends JDialog implements WindowObject<Order> {
 			}
 			{
 				JPanel entriesPanel = new JPanel();
-				tabbedPane.addTab("Entries", null, entriesPanel, null);
+				tabbedPane.addTab("Videos", null, entriesPanel, null);
 				entriesPanel.setLayout(new BorderLayout(0, 0));
 
 				JScrollPane scrollPane = new JScrollPane();

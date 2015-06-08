@@ -17,7 +17,7 @@ import model.VideoSet;
 
 public class Application {
 
-	public JFrame frame;
+
 	public OrderSet orderset = new OrderSet();
 	public ClientSet clientset = new ClientSet();
 	public VideoSet videoset = new VideoSet();
@@ -29,8 +29,7 @@ public class Application {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Application window = new Application();
-					window.frame.setVisible(true);
+					new Application();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,18 +48,24 @@ public class Application {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		JFrame frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+
+		frame.getContentPane()
+				.add(new JLabel(
+						"<html><body style='width: 450px'>"
+								+ "<strong>Temat 12: Wypożyczalnia filmów<strong>"
+								+ "<p>Program obsługujący wypożyczalnię filmów. Obiektowy opis osób (obsada filmów oraz klienci wypożyczalni)"
+								+ "i filmów oraz możliwość wiązania ze sobą tych informacji (wprowadzanie obsady filmów, reżysera, scenarzysty "
+								+ "itd.). Zapamiętywanie historii wypożyczania dla filmów oraz klientów. Możliwość przeszukiwania i "
+								+ "filtrowania bazy według zadanych kryteriów.</p>"
+								+ "</body></html>"));
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBorder(new EmptyBorder(0, 5, 0, 5));
-		
-		frame.getContentPane().add(new JLabel("<html><body style='width: 450px'><b>Temat 12: Wypożyczalnia filmów<b>" +
-"<p>Program obsługujący wypożyczalnię filmów. Obiektowy opis osób (obsada filmów oraz klienci"+
-"wypożyczalni) i filmów oraz możliwość wiązania ze sobą tych informacji (wprowadzanie obsady"+
-"filmów, reżysera, scenarzysty itd.). Zapamiętywanie historii wypożyczania dla filmów oraz klientów."+
-"Możliwość przeszukiwania i filtrowania bazy według zadanych kryteriów.</p></body></html>"));
+
 		frame.getContentPane().add(tabbedPane, BorderLayout.NORTH);
 
 		tabbedPane.addTab("Clients", new ClientPanel(frame, clientset));
@@ -72,6 +77,7 @@ public class Application {
 		tabbedPane.addTab("Utils", new UtilsPanel(frame, orderset, videoset,
 				clientset));
 		frame.pack();
+		frame.setVisible(true);
 	}
 
 }
